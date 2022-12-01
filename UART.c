@@ -66,86 +66,86 @@ typedef unsigned char u8;
 void delay_ms(u16 n);
 
 
-sbit BEEP=P2^3;
+sbit BEEP = P2 ^ 3;
 
 
- //主要时间a
+//主要时间a
 void init_UART()
- {
- 		  //1.打开总开关
-	  EA = 1;
-	  //2.串口中断电路独有开关
-	  ES = 1;
-	  //3.串口工作方式:8位波特率可变
-	  SM0 = 0;
-	  SM1 = 1;
-	  //4.打开串口允许接受数据控制位
-	  REN = 1;
-	  //5.定时器1作为串口的波特率发生器
-	  TMOD = 0X20 ;     //0010 0000
-	  //6.装载初值
-	  TH1 = 0XFD;
-	  TL1 = 0XFD;
-	  //7.开始计时！！
-	  TR1 =1;
+{
+	//1.打开总开关
+	EA = 1;
+	//2.串口中断电路独有开关
+	ES = 1;
+	//3.串口工作方式:8位波特率可变
+	SM0 = 0;
+	SM1 = 1;
+	//4.打开串口允许接受数据控制位
+	REN = 1;
+	//5.定时器1作为串口的波特率发生器
+	TMOD = 0X20;     //0010 0000
+	//6.装载初值
+	TH1 = 0XFD;
+	TL1 = 0XFD;
+	//7.开始计时！！
+	TR1 = 1;
 
- }
+}
 
 
-int UARTStatus=0;
+int UARTStatus = 0;
 
 int getUARTStatus()
 {
- return UARTStatus;
+	return UARTStatus;
 }
 
 
 
 void init_UART_main_lock()
 {
- 		 while(1)
-		 {
+	while (1)
+	{
 
-		   if(getUARTStatus()==10)
-		   {
-			  led_stop();
-			  showHello();
-		   }
-		   if(getUARTStatus()==11)
-		   {
-			  led_stop();
-			  showBirthday();
-		   }
-		   if(getUARTStatus()==12)
-		   {
-			  led_stop();
-			  showBirthday1();
-		   }
-		   if(getUARTStatus()==13)
-		   {
-			  led_stop();
-			  showStudentId();
-		   }
-		   
-		   if(getUARTStatus()==14)
-		   {
-		   	  led_stop();
-			  FLOW_LED2();
-		   }
-		   if(getUARTStatus()==15)
-		   {
-		   	  led_stop();
-			  FLOW_LED3();
-		   }
+		if (getUARTStatus() == 10)
+		{
+			led_stop();
+			showHello();
+		}
+		if (getUARTStatus() == 11)
+		{
+			led_stop();
+			showBirthday();
+		}
+		if (getUARTStatus() == 12)
+		{
+			led_stop();
+			showBirthday1();
+		}
+		if (getUARTStatus() == 13)
+		{
+			led_stop();
+			showStudentId();
+		}
 
-		   else if(getUARTStatus()==0)
-		   {
-		   	  P1=0xff;
-			  led_stop();
-		   }
+		if (getUARTStatus() == 14)
+		{
+			led_stop();
+			FLOW_LED2();
+		}
+		if (getUARTStatus() == 15)
+		{
+			led_stop();
+			FLOW_LED3();
+		}
 
-		   delay_ms(5);
-		 }
+		else if (getUARTStatus() == 0)
+		{
+			P1 = 0xff;
+			led_stop();
+		}
+
+		delay_ms(5);
+	}
 }
 
 
@@ -158,73 +158,73 @@ void init_UART_main_lock()
 
 void UART() interrupt 4
 {
-	unsigned char temp = 0 ;
+	unsigned char temp = 0;
 
 
-	if(RI)
+	if (RI)
 	{
-		 RI = 0 ;
+		RI = 0;
 		//接收数据
-		 temp = SBUF;
-		 //清空接受数据标志位
-		
-		 //接受数值	 
-		 if(temp == 1) 
-			{
-			BEEP=0;
-			}
+		temp = SBUF;
+		//清空接受数据标志位
+
+		//接受数值	 
+		if (temp == 1)
+		{
+			BEEP = 0;
+		}
 		//接受字符
-		 else if(temp == 2)
-		 	{
+		else if (temp == 2)
+		{
 			closebeep();
-			}
+		}
 
-		else if(temp == 3)
-		 	{
+		else if (temp == 3)
+		{
 			Openled4();
-			}
-		 else if(temp == 4)
-		 	{
-			P1=0xff;
-			}
-		  else if(temp == 5)
-		 	{
+		}
+		else if (temp == 4)
+		{
+			P1 = 0xff;
+		}
+		else if (temp == 5)
+		{
 			car_forward();
-			}
-		else if(temp == 6)
-		 	{
+		}
+		else if (temp == 6)
+		{
 			car_return();
-			}
-		else if(temp == 7)
-		 	{
+		}
+		else if (temp == 7)
+		{
 			car_left();
-			}
-		else if(temp == 8)
-		 	{
-             car_right();
-			}
-		else if(temp == 9)
-		 	{
+		}
+		else if (temp == 8)
+		{
+			car_right();
+		}
+		else if (temp == 9)
+		{
 			car_stop();
-			}
+		}
 
-		else if(temp >= 10&&temp<=15)
-		 	{
-			UARTStatus=temp;
-			}
+		else if (temp >= 10 && temp <= 15)
+		{
+			UARTStatus = temp;
+		}
 
 
-		else if(temp == 16)
-		 	{
-			UARTStatus=0;
-			}
+		else if (temp == 16)
+		{
+			UARTStatus = 0;
+		}
 
 		//数据传送回去
 		temp++;
 		SBUF = temp;
 
 	}
-	if(TI)
+	if (TI)
 		TI = 0;
-		
+
 }
