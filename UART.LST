@@ -1,0 +1,261 @@
+C51 COMPILER V9.00   UART                                                                  12/01/2022 17:16:09 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN UART.OBJ
+COMPILER INVOKED BY: D:\soft\C51\BIN\C51.EXE UART.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          
+   4          
+   5          
+   6          
+   7          
+   8          
+   9          
+  10          //------------LED------------//
+  11          void Openled4();
+  12          void SHINE_LED();
+  13          void FLOW_LED();
+  14          void Turnonled(unsigned int num);
+  15          void Turnoffled(unsigned int num);
+  16          void FLOW_LED2();
+  17          void FLOW_LED3();
+  18          //---------------------------//
+  19          //------------beep------------//
+  20          void openbeep();
+  21          void closebeep();
+  22          void alarmBeep();
+  23          void led_beep();
+  24          void led_beep2();
+  25          void led_beep3();
+  26          //----------------------------//
+  27          //------------key------------//
+  28          void s2();
+  29          void s3();
+  30          void s4();
+  31          void s5();
+  32          unsigned char MatrixKey();
+  33          void MatrixKey_beep_lock();
+  34          //----------------------------//
+  35          //------------led_code------------//
+  36          void showHello();
+  37          void showBirthday();
+  38          void showBirthday1();
+  39          void led_stop();
+  40          void showStudentId();
+  41          //----------------------------//
+  42          //------------moto----------------//
+  43          void car_test();
+  44          void car_test2();
+  45          void car_forward();
+  46          void car_return();
+  47          void car_left();
+  48          void car_right();
+  49          void car_right();
+  50          void car_stop();
+  51          void car_show_lock();
+  52          //----------------------------//
+  53          //-----------interrupt-----------//
+  54          void init_time0();
+  55          //------------URRT---------------//
+C51 COMPILER V9.00   UART                                                                  12/01/2022 17:16:09 PAGE 2   
+
+  56          void init_UART();
+  57          int getUARTStatus();
+  58          void init_UART_main_lock();
+  59          //----------------------------//
+  60          
+  61          
+  62          typedef unsigned int u16;
+  63          typedef unsigned char u8;
+  64          
+  65          
+  66          void delay_ms(u16 n);
+  67          
+  68          
+  69          sbit BEEP=P2^3;
+  70          
+  71          
+  72           //主要时间a
+  73          void init_UART()
+  74           {
+  75   1                        //1.打开总开关
+  76   1                EA = 1;
+  77   1                //2.串口中断电路独有开关
+  78   1                ES = 1;
+  79   1                //3.串口工作方式:8位波特率可变
+  80   1                SM0 = 0;
+  81   1                SM1 = 1;
+  82   1                //4.打开串口允许接受数据控制位
+  83   1                REN = 1;
+  84   1                //5.定时器1作为串口的波特率发生器
+  85   1                TMOD = 0X20 ;     //0010 0000
+  86   1                //6.装载初值
+  87   1                TH1 = 0XFD;
+  88   1                TL1 = 0XFD;
+  89   1                //7.开始计时！！
+  90   1                TR1 =1;
+  91   1      
+  92   1       }
+  93          
+  94          
+  95          int UARTStatus=0;
+  96          
+  97          int getUARTStatus()
+  98          {
+  99   1       return UARTStatus;
+ 100   1      }
+ 101          
+ 102          
+ 103          
+ 104          void init_UART_main_lock()
+ 105          {
+ 106   1                       while(1)
+ 107   1                       {
+ 108   2      
+ 109   2                         if(getUARTStatus()==10)
+ 110   2                         {
+ 111   3                                led_stop();
+ 112   3                                showHello();
+ 113   3                         }
+ 114   2                         if(getUARTStatus()==11)
+ 115   2                         {
+ 116   3                                led_stop();
+ 117   3                                showBirthday();
+C51 COMPILER V9.00   UART                                                                  12/01/2022 17:16:09 PAGE 3   
+
+ 118   3                         }
+ 119   2                         if(getUARTStatus()==12)
+ 120   2                         {
+ 121   3                                led_stop();
+ 122   3                                showBirthday1();
+ 123   3                         }
+ 124   2                         if(getUARTStatus()==13)
+ 125   2                         {
+ 126   3                                led_stop();
+ 127   3                                showStudentId();
+ 128   3                         }
+ 129   2                         
+ 130   2                         if(getUARTStatus()==14)
+ 131   2                         {
+ 132   3                                led_stop();
+ 133   3                                FLOW_LED2();
+ 134   3                         }
+ 135   2                         if(getUARTStatus()==15)
+ 136   2                         {
+ 137   3                                led_stop();
+ 138   3                                FLOW_LED3();
+ 139   3                         }
+ 140   2      
+ 141   2                         else if(getUARTStatus()==0)
+ 142   2                         {
+ 143   3                                P1=0xff;
+ 144   3                                led_stop();
+ 145   3                         }
+ 146   2      
+ 147   2                         delay_ms(5);
+ 148   2                       }
+ 149   1      }
+ 150          
+ 151          
+ 152          
+ 153          
+ 154          
+ 155          
+ 156          
+ 157          
+ 158          
+ 159          void UART() interrupt 4
+ 160          {
+ 161   1              unsigned char temp = 0 ;
+ 162   1      
+ 163   1      
+ 164   1              if(RI)
+ 165   1              {
+ 166   2                       RI = 0 ;
+ 167   2                      //接收数据
+ 168   2                       temp = SBUF;
+ 169   2                       //清空接受数据标志位
+ 170   2                      
+ 171   2                       //接受数值      
+ 172   2                       if(temp == 1) 
+ 173   2                              {
+ 174   3                              BEEP=0;
+ 175   3                              }
+ 176   2                      //接受字符
+ 177   2                       else if(temp == 2)
+ 178   2                              {
+ 179   3                              closebeep();
+C51 COMPILER V9.00   UART                                                                  12/01/2022 17:16:09 PAGE 4   
+
+ 180   3                              }
+ 181   2      
+ 182   2                      else if(temp == 3)
+ 183   2                              {
+ 184   3                              Openled4();
+ 185   3                              }
+ 186   2                       else if(temp == 4)
+ 187   2                              {
+ 188   3                              P1=0xff;
+ 189   3                              }
+ 190   2                        else if(temp == 5)
+ 191   2                              {
+ 192   3                              car_forward();
+ 193   3                              }
+ 194   2                      else if(temp == 6)
+ 195   2                              {
+ 196   3                              car_return();
+ 197   3                              }
+ 198   2                      else if(temp == 7)
+ 199   2                              {
+ 200   3                              car_left();
+ 201   3                              }
+ 202   2                      else if(temp == 8)
+ 203   2                              {
+ 204   3                   car_right();
+ 205   3                              }
+ 206   2                      else if(temp == 9)
+ 207   2                              {
+ 208   3                              car_stop();
+ 209   3                              }
+ 210   2      
+ 211   2                      else if(temp >= 10&&temp<=15)
+ 212   2                              {
+ 213   3                              UARTStatus=temp;
+ 214   3                              }
+ 215   2      
+ 216   2      
+ 217   2                      else if(temp == 16)
+ 218   2                              {
+ 219   3                              UARTStatus=0;
+ 220   3                              }
+ 221   2      
+ 222   2                      //数据传送回去
+ 223   2                      temp++;
+ 224   2                      SBUF = temp;
+ 225   2      
+ 226   2              }
+ 227   1              if(TI)
+ 228   1                      TI = 0;
+ 229   1                      
+ 230   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    343    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.00   UART                                                                  12/01/2022 17:16:09 PAGE 5   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

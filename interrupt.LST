@@ -1,0 +1,227 @@
+C51 COMPILER V9.00   INTERRUPT                                                             12/01/2022 17:11:23 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE INTERRUPT
+OBJECT MODULE PLACED IN interrupt.OBJ
+COMPILER INVOKED BY: D:\soft\C51\BIN\C51.EXE interrupt.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          //------------LED------------//
+   4          void Openled4();
+   5          void SHINE_LED();
+   6          void FLOW_LED();
+   7          void Turnonled(unsigned int num);
+   8          void Turnoffled(unsigned int num);
+   9          void FLOW_LED2();
+  10          void FLOW_LED3();
+  11          //---------------------------//
+  12          //------------beep------------//
+  13          void openbeep();
+  14          void closebeep();
+  15          void alarmBeep();
+  16          void led_beep();
+  17          void led_beep2();
+  18          void led_beep3();
+  19          //----------------------------//
+  20          //------------key------------//
+  21          void s2();
+  22          void s3();
+  23          void s4();
+  24          void s5();
+  25          unsigned char MatrixKey();
+  26          void MatrixKey_beep_lock();
+  27          //----------------------------//
+  28          //------------led_code------------//
+  29          void showHello();
+  30          void showBirthday();
+  31          void showBirthday1();
+  32          void led_stop();
+  33          void showStudentId();
+  34          //----------------------------//
+  35          //------------moto----------------//
+  36          void car_test();
+  37          void car_test2();
+  38          void car_forward();
+  39          void car_return();
+  40          void car_left();
+  41          void car_right();
+  42          void car_right();
+  43          void car_stop();
+  44          void car_show_lock();
+  45          //----------------------------//
+  46          //-----------interrupt-----------//
+  47          void init_time0();
+  48          //------------URRT---------------//
+  49          void init_UART();
+  50          int getUARTStatus();
+  51          void init_UART_main_lock();
+  52          //----------------------------//
+  53          
+  54          
+  55          typedef unsigned int u16;
+C51 COMPILER V9.00   INTERRUPT                                                             12/01/2022 17:11:23 PAGE 2   
+
+  56          typedef unsigned char u8;
+  57          
+  58          int cnt=0;
+  59          
+  60          void delay_ms(u16 n);
+  61          
+  62           //中断事件b
+  63           //0:外部中断0
+  64           //1:定时器中断0
+  65           //2:外部中断1
+  66           //3:定时器中断1
+  67           //4:串口中断
+  68          
+  69          
+  70          
+  71          void init_time0()
+  72          {
+  73   1      
+  74   1      //1. 配置定时器0工作模式位16位计时
+  75   1              TMOD = 0x01;
+  76   1              //2. 给初值，定一个10ms出来
+  77   1              TL0=0x00;
+  78   1              TH0=0xDC;
+  79   1              //3. 开始计时
+  80   1              TR0 = 1;
+  81   1              TF0 = 0;
+  82   1              //4. 打开定时器0中断
+  83   1              ET0 = 1;
+  84   1              //5. 打开总中断EA
+  85   1              EA = 1;
+  86   1      
+  87   1      }
+  88          
+  89          
+  90          
+  91          /*
+  92          void  interrupt_beep() interrupt 2
+  93          {
+  94                  led_stop();
+  95                  car_forward();
+  96                  delay_ms(3000);
+  97                  car_stop();
+  98                  howStudentId();
+  99          
+ 100           }
+ 101          */
+ 102          
+ 103          
+ 104          
+ 105          int s=0;
+ 106          
+ 107          /*
+ 108          void Time0Handler_1s() interrupt 1
+ 109          {
+ 110                  cnt++;  //统计爆表的次数
+ 111                  //重新给初值
+ 112                  TL0=0x00;
+ 113                  TH0=0xDC;
+ 114                  if(cnt == 100)
+ 115                  {//爆表100次，经过了1s
+ 116                          cnt = 0;  //当100次表示1s，重新让cnt从0开始，计算下一次的1s
+ 117                  
+C51 COMPILER V9.00   INTERRUPT                                                             12/01/2022 17:11:23 PAGE 3   
+
+ 118                  if(s==0)
+ 119                  {
+ 120                    P1 = 0X08;
+ 121                    s=1;
+ 122                  }
+ 123                   else if(s==1)
+ 124                   {
+ 125                   P1 = 0Xf7;
+ 126                   s=0;
+ 127                   }  
+ 128                  
+ 129                    
+ 130          
+ 131                  }
+ 132          
+ 133          }
+ 134          
+ 135          */
+ 136          
+ 137          
+ 138          /*
+ 139          void Time0Handler_560s() interrupt 1
+ 140          {
+ 141                  cnt++;  //统计爆表的次数
+ 142                  //重新给初值
+ 143                  TL0=0x00;
+ 144                  TH0=0xDC;
+ 145                  if(cnt == 56)
+ 146                  {//爆表100次，经过了1s
+ 147                          cnt = 0;  //当100次表示1s，重新让cnt从0开始，计算下一次的1s
+ 148                  
+ 149                  if(s==0)
+ 150                  {
+ 151                    P1 = 0X00;
+ 152                    s=1;
+ 153                  }
+ 154                   else if(s==1)
+ 155                   {
+ 156                   P1 = 0Xff;
+ 157                   s=0;
+ 158                   }  
+ 159                  
+ 160                    
+ 161          
+ 162                  }
+ 163          
+ 164          }
+ 165          
+ 166          */
+ 167          
+ 168          /*
+ 169          void Time0Handler_2s() interrupt 1
+ 170          {
+ 171                  cnt++;  //统计爆表的次数
+ 172                  //重新给初值
+ 173                  TL0=0x00;
+ 174                  TH0=0xDC;
+ 175                  if(cnt == 200)
+ 176                  {//爆表100次，经过了1s
+ 177                          cnt = 0;  //当100次表示1s，重新让cnt从0开始，计算下一次的1s
+ 178                  
+ 179                  if(s==0)
+C51 COMPILER V9.00   INTERRUPT                                                             12/01/2022 17:11:23 PAGE 4   
+
+ 180                  {
+ 181                    P1 = 0X00;
+ 182                    car_forward();
+ 183                    s=1;
+ 184                  }
+ 185                   else if(s==1)
+ 186                   {
+ 187                     car_stop();
+ 188                     P1 = 0Xff;
+ 189                   s=0;
+ 190                   }  
+ 191                  
+ 192                    
+ 193          
+ 194                  }
+ 195          
+ 196          }
+ 197          
+ 198          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     18    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

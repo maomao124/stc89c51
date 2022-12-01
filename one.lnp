@@ -1,0 +1,10 @@
+"main.obj",
+"led.obj",
+"beep.obj",
+"key.obj",
+"led_code.obj",
+"moto.obj",
+"interrupt.obj",
+"UART.obj" 
+TO "one" 
+RAMSIZE(256) 
