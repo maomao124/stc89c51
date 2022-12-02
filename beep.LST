@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   BEEP                                                                  11/28/2022 20:20:21 PAGE 1   
+C51 COMPILER V9.00   BEEP                                                                  12/02/2022 09:55:35 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE BEEP
@@ -25,29 +25,29 @@ line level    source
   16          void delay2_ms(u16 n)
   17          {
   18   1              u8 i;
-  19   1              while(n--)
+  19   1              while (n--)
   20   1              {
   21   2                      i = 111;
-  22   2                      while(i--);
+  22   2                      while (i--);
   23   2              }
   24   1      }
   25          
   26          
-  27          sbit BEEP=P2^3;
+  27          sbit BEEP = P2 ^ 3;
   28          
   29          
   30          
   31          
   32          void openbeep()
   33          {
-  34   1      BEEP=0;
+  34   1              BEEP = 0;
   35   1      }
   36          
   37          
   38          
   39          void closebeep()
   40          {
-  41   1      BEEP=1;
+  41   1              BEEP = 1;
   42   1      }
   43          
   44          
@@ -55,21 +55,21 @@ line level    source
   46          
   47          void alarmBeep()
   48          {
-  49   1              BEEP=!BEEP;
+  49   1              BEEP = !BEEP;
   50   1      }
   51          
   52          
   53          
   54          
   55          void led_beep()
-C51 COMPILER V9.00   BEEP                                                                  11/28/2022 20:20:21 PAGE 2   
+C51 COMPILER V9.00   BEEP                                                                  12/02/2022 09:55:35 PAGE 2   
 
   56          {
-  57   1        BEEP=0;
-  58   1        P1=0x00;
-  59   1         delay2_ms(200);
-  60   1      BEEP=1;
-  61   1        P1=0xff;
+  57   1              BEEP = 0;
+  58   1              P1 = 0x00;
+  59   1              delay2_ms(200);
+  60   1              BEEP = 1;
+  61   1              P1 = 0xff;
   62   1      
   63   1      }
   64          
@@ -77,32 +77,32 @@ line level    source
   66          
   67          void led_beep2()
   68          {
-  69   1        BEEP=0;
-  70   1        FLOW_LED2();
-  71   1      BEEP=1;
-  72   1        P1=0xff;
-  73   1         delay2_ms(1000);
+  69   1              BEEP = 0;
+  70   1              FLOW_LED2();
+  71   1              BEEP = 1;
+  72   1              P1 = 0xff;
+  73   1              delay2_ms(1000);
   74   1      
   75   1      }
   76          
-  77          int i=0;
+  77          int i = 0;
   78          
   79          void led_beep3()
   80          {
   81   1      
-  82   1      P1=0x03;
-  83   1      BEEP=0;
-  84   1      delay2_ms(200);
+  82   1              P1 = 0x03;
+  83   1              BEEP = 0;
+  84   1              delay2_ms(200);
   85   1      
-  86   1      for(i=0;i<7;i++)
-  87   1      {
-  88   2      P1=_crol_(P1,1);
-  89   2      delay2_ms(200);
-  90   2      }
+  86   1              for (i = 0; i < 7; i++)
+  87   1              {
+  88   2                      P1 = _crol_(P1, 1);
+  89   2                      delay2_ms(200);
+  90   2              }
   91   1      
-  92   1      BEEP=1;
-  93   1        P1=0xff;
-  94   1         delay2_ms(1000);
+  92   1              BEEP = 1;
+  93   1              P1 = 0xff;
+  94   1              delay2_ms(1000);
   95   1      }
   96          
 

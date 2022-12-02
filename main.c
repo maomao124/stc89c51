@@ -74,14 +74,23 @@ void init_UART();
 int getUARTStatus();
 void init_UART_main_lock();
 //----------------------------//
-
+//------------led_1602-----------//
+typedef unsigned char uchar;
+typedef unsigned int uint;
+void led_1602_show(uchar *str);
+//----------------------------//
+//------------music-------------//
+void Time0_Init();
+void music1();
+void music2_init();
+void music2();
+//----------------------------//
 
 void mydelay()
 {
 	unsigned int z = 1000000;
 	while (z--);
 }
-
 
 
 typedef unsigned int u16;
@@ -145,6 +154,25 @@ void main(void)
 
 	init_UART_main_lock();
 
+	/*
+	Time0_Init();			//定时器0中断初始化
+	while(1)
+	{
+		music1();		//播放
+	}
+
+	*/
+	
+	/*
+	music2_init();			//定时器0中断初始化
+	while(1)
+	{
+		music2();		//播放
+	}
+	*/
+	
+	//uchar *str="123";
+	//led_1602_show(str);
 	while (1);
 
 }

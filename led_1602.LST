@@ -1,0 +1,145 @@
+C51 COMPILER V9.00   LED_1602                                                              12/02/2022 14:36:59 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE LED_1602
+OBJECT MODULE PLACED IN led_1602.OBJ
+COMPILER INVOKED BY: D:\soft\C51\BIN\C51.EXE led_1602.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          
+   4          
+   5          typedef unsigned char uchar;
+   6          typedef unsigned int uint;
+   7          
+   8          #define LCD1602_DB P0   //LCD1602数据总线
+   9          
+  10          sbit LCD1602_RS = P3^5;  //RS端
+  11          sbit LCD1602_RW = P3^6;  //RW端
+  12          sbit LCD1602_EN = P3^4;  //EN端
+  13          sbit DU = P2^6;//
+  14          sbit WE = P2^7;//数码管位选段选用于关闭数码管显示
+  15          
+  16          /*=================================================
+  17          *函数名称：Read_Busy
+  18          *函数功能：判断1602液晶忙，并等待
+  19          =================================================*/
+  20          void Read_Busy()
+  21          {
+  22   1              uchar busy;
+  23   1              LCD1602_DB = 0xff;//复位数据总线
+  24   1              LCD1602_RS = 0;   //拉低RS
+  25   1              LCD1602_RW = 1;   //拉高RW读
+  26   1              do
+  27   1              {
+  28   2                      LCD1602_EN = 1;//使能EN
+  29   2                      busy = LCD1602_DB;//读回数据
+  30   2                      LCD1602_EN = 0;  //拉低使能以便于下一次产生上升沿
+  31   2              }while(busy & 0x80); //判断状态字BIT7位是否为1，为1则表示忙，程序等待
+  32   1      }
+  33          /*=================================================
+  34          *函数名称：LCD1602_Write_Cmd
+  35          *函数功能：写LCD1602命令
+  36          *调用：Read_Busy();
+  37          *输入：cmd:要写的命令
+  38          =================================================*/
+  39          void LCD1602_Write_Cmd(uchar cmd)
+  40          {
+  41   1              Read_Busy();     //判断忙，忙则等待
+  42   1              LCD1602_RS = 0;
+  43   1              LCD1602_RW = 0; //拉低RS、RW操作时序情况1602课件下中文使用说明基本操作时序章节
+  44   1              LCD1602_DB = cmd;//写入命令
+  45   1              LCD1602_EN = 1;  //拉高使能端 数据被传输到LCD1602内
+  46   1              LCD1602_EN = 0;  //拉低使能以便于下一次产生上升沿
+  47   1      }
+  48          /*=================================================
+  49          *函数名称：LCD1602_Write_Dat
+  50          *函数功能：写LCD1602数据
+  51          *调用：Read_Busy();
+  52          *输入：dat：需要写入的数据
+  53          =================================================*/
+  54          void LCD1602_Write_Dat(uchar dat)
+  55          {
+C51 COMPILER V9.00   LED_1602                                                              12/02/2022 14:36:59 PAGE 2   
+
+  56   1              Read_Busy();
+  57   1              LCD1602_RS = 1;
+  58   1              LCD1602_RW = 0;
+  59   1              LCD1602_DB = dat;
+  60   1              LCD1602_EN = 1;
+  61   1              LCD1602_EN = 0;
+  62   1      }
+  63          /*=================================================
+  64          *函数名称：LCD1602_Dis_OneChar
+  65          *函数功能：在指定位置显示一个字符
+  66          *调用：LCD1602_Write_Cmd(); LCD1602_Write_Dat();        
+  67          *输入：x：要显示的横坐标取值0-40，y：要显示的行坐标取值0-1（0为第一行,1为第二行）
+  68                          dat：需要显示的数据以ASCLL形式显示
+  69          =================================================*/
+  70          void LCD1602_Dis_OneChar(uchar x, uchar y,uchar dat)
+  71          {
+  72   1              if(y)   x |= 0x40;
+  73   1              x |= 0x80;
+  74   1              LCD1602_Write_Cmd(x);
+  75   1              LCD1602_Write_Dat(dat);         
+  76   1      }
+  77          /*=================================================
+  78          *函数名称：LCD1602_Dis_Str
+  79          *函数功能：在指定位置显示字符串
+  80          *调用：LCD1602_Write_Cmd(); LCD1602_Write_Dat();
+  81          *输入：x：要显示的横坐标取值0-40，y：要显示的行坐标取值0-1（0为第一行,1为第二行）
+  82                          *str：需要显示的字符串
+  83          =================================================*/
+  84          void LCD1602_Dis_Str(uchar x, uchar y, uchar *str)
+  85          {
+  86   1              if(y) x |= 0x40;
+  87   1              x |= 0x80;
+  88   1              LCD1602_Write_Cmd(x);
+  89   1              while(*str != '\0')
+  90   1              {
+  91   2                      LCD1602_Write_Dat(*str++);
+  92   2              }
+  93   1      }
+  94          /*=================================================
+  95          *函数名称：Init_LCD1602
+  96          *函数功能：1602初始化
+  97          *调用： LCD1602_Write_Cmd();
+  98          =================================================*/
+  99          void Init_LCD1602()
+ 100          {
+ 101   1              LCD1602_Write_Cmd(0x38); //     设置16*2显示，5*7点阵，8位数据接口
+ 102   1              LCD1602_Write_Cmd(0x0c); //开显示
+ 103   1              LCD1602_Write_Cmd(0x06); //读写一字节后地址指针加1
+ 104   1              LCD1602_Write_Cmd(0x01); //清除显示
+ 105   1      }
+ 106          
+ 107          
+ 108          
+ 109          
+ 110          void led_1602_show(uchar *str)
+ 111          {
+ 112   1              //uchar TestStr[] = {"Welcome!"};
+ 113   1              DU = 0;
+ 114   1              WE = 0;//关闭数码管显示
+ 115   1              Init_LCD1602();//1602初始化
+ 116   1              LCD1602_Dis_Str(0, 0, str);     //显示字符串
+ 117   1              LCD1602_Dis_OneChar(10, 1, 0xff); //显示一个黑方格
+C51 COMPILER V9.00   LED_1602                                                              12/02/2022 14:36:59 PAGE 3   
+
+ 118   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    163    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   MOTO                                                                  11/30/2022 15:06:44 PAGE 1   
+C51 COMPILER V9.00   MOTO                                                                  12/02/2022 09:55:35 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE MOTO
@@ -20,7 +20,7 @@ line level    source
   11          
   12          
   13          
-  14           /*
+  14          /*
   15          sbit IN1=P1^2;
   16          sbit IN2=P1^3;
   17          sbit IN3=P1^6;
@@ -29,28 +29,28 @@ line level    source
   20          sbit EN2=P1^5;
   21           */
   22          
-  23          sbit IN1=P2^2;
-  24          sbit IN2=P2^5;
-  25          sbit IN3=P3^7;
-  26          sbit IN4=P3^6;
-  27          sbit EN1=P2^0;
-  28          sbit EN2=P2^4;
+  23          sbit IN1 = P2 ^ 2;
+  24          sbit IN2 = P2 ^ 5;
+  25          sbit IN3 = P3 ^ 7;
+  26          sbit IN4 = P3 ^ 6;
+  27          sbit EN1 = P2 ^ 0;
+  28          sbit EN2 = P2 ^ 4;
   29          
-  30          sbit BEEP=P2^3;
+  30          sbit BEEP = P2 ^ 3;
   31          
-  32          sbit key_s2=P3^0;
-  33          sbit key_s3=P3^1;
-  34          sbit key_s4=P3^2;
-  35          sbit key_s5=P3^3;
+  32          sbit key_s2 = P3 ^ 0;
+  33          sbit key_s3 = P3 ^ 1;
+  34          sbit key_s4 = P3 ^ 2;
+  35          sbit key_s5 = P3 ^ 3;
   36          
   37          //专门测试车的走向
   38          void car_test()
   39          {
-  40   1       //打开左开关
-  41   1          EN1=1;
+  40   1              //打开左开关
+  41   1              EN1 = 1;
   42   1              //IN1和 IN2     电平相反才行
-  43   1              IN1=0;
-  44   1              IN2=1; //10 :  后    01：前
+  43   1              IN1 = 0;
+  44   1              IN2 = 1; //10 :  后    01：前
   45   1      
   46   1      
   47   1      }
@@ -58,84 +58,84 @@ line level    source
   49          void car_test2()
   50          {
   51   1      
-  52   1          EN2=1;
-  53   1              IN3=1;
-  54   1              IN4=0;
+  52   1              EN2 = 1;
+  53   1              IN3 = 1;
+  54   1              IN4 = 0;
   55   1      
-C51 COMPILER V9.00   MOTO                                                                  11/30/2022 15:06:44 PAGE 2   
+C51 COMPILER V9.00   MOTO                                                                  12/02/2022 09:55:35 PAGE 2   
 
   56   1      
   57   1      }
   58          
   59          
-  60           //1车向前
+  60          //1车向前
   61          void car_forward()
   62          {
-  63   1                 //打开左开关
-  64   1          EN1=1;
+  63   1              //打开左开关
+  64   1              EN1 = 1;
   65   1              //IN1和 IN2     电平相反才行
-  66   1              IN1=0;
-  67   1              IN2=1; //10 :  后    01：前
-  68   1                  EN2=1;
-  69   1              IN3=1;
-  70   1              IN4=0;
+  66   1              IN1 = 0;
+  67   1              IN2 = 1; //10 :  后    01：前
+  68   1              EN2 = 1;
+  69   1              IN3 = 1;
+  70   1              IN4 = 0;
   71   1      }
   72          //2车向后
   73          
   74          void car_return()
   75          {
-  76   1                 //打开左开关
-  77   1          EN1=1;
+  76   1              //打开左开关
+  77   1              EN1 = 1;
   78   1              //IN1和 IN2     电平相反才行
-  79   1              IN1=1;
-  80   1              IN2=0; //10 :  后    01：前
-  81   1                  EN2=1;
-  82   1              IN3=0;
-  83   1              IN4=1;
+  79   1              IN1 = 1;
+  80   1              IN2 = 0; //10 :  后    01：前
+  81   1              EN2 = 1;
+  82   1              IN3 = 0;
+  83   1              IN4 = 1;
   84   1      }
   85          
   86          //3车向左
   87          
   88          void car_left()
   89          {
-  90   1                 //打开左开关
-  91   1          EN1=1;
+  90   1              //打开左开关
+  91   1              EN1 = 1;
   92   1              //IN1和 IN2     电平相反才行
-  93   1              IN1=0;
-  94   1              IN2=0; //10 :  后    01：前
-  95   1                  EN2=1;
-  96   1              IN3=1;
-  97   1              IN4=0;
+  93   1              IN1 = 0;
+  94   1              IN2 = 0; //10 :  后    01：前
+  95   1              EN2 = 1;
+  96   1              IN3 = 1;
+  97   1              IN4 = 0;
   98   1      }
   99          
  100          //4车向右
  101          
  102          void car_right()
  103          {
- 104   1                 //打开左开关
- 105   1          EN1=1;
+ 104   1              //打开左开关
+ 105   1              EN1 = 1;
  106   1              //IN1和 IN2     电平相反才行
- 107   1              IN1=0;
- 108   1              IN2=1; //10 :  后    01：前
- 109   1                  EN2=1;
- 110   1              IN3=0;
- 111   1              IN4=0;
+ 107   1              IN1 = 0;
+ 108   1              IN2 = 1; //10 :  后    01：前
+ 109   1              EN2 = 1;
+ 110   1              IN3 = 0;
+ 111   1              IN4 = 0;
  112   1      }
  113          //5车停止
  114          
  115          
  116          void car_stop()
  117          {
-C51 COMPILER V9.00   MOTO                                                                  11/30/2022 15:06:44 PAGE 3   
+C51 COMPILER V9.00   MOTO                                                                  12/02/2022 09:55:35 PAGE 3   
 
- 118   1                 //打开左开关
- 119   1          EN1=1;
+ 118   1              //打开左开关
+ 119   1              EN1 = 1;
  120   1              //IN1和 IN2     电平相反才行
- 121   1              IN1=0;
- 122   1              IN2=0; //10 :  后    01：前
- 123   1                  EN2=1;
- 124   1              IN3=0;
- 125   1              IN4=0;
+ 121   1              IN1 = 0;
+ 122   1              IN2 = 0; //10 :  后    01：前
+ 123   1              EN2 = 1;
+ 124   1              IN3 = 0;
+ 125   1              IN4 = 0;
  126   1      }
  127          
  128          
@@ -143,92 +143,92 @@ line level    source
  130          void car_show_lock()
  131          {
  132   1      
- 133   1      int c=0;
- 134   1              
- 135   1                      while(1)
- 136   1                      {
+ 133   1              int c = 0;
+ 134   1      
+ 135   1              while (1)
+ 136   1              {
  137   2      
- 138   2                       if(key_s2==0)
+ 138   2                      if (key_s2 == 0)
  139   2                      {
  140   3      
- 141   3                          delay_ms(5);//消抖
- 142   3                              if(key_s2==0)
+ 141   3                              delay_ms(5);//消抖
+ 142   3                              if (key_s2 == 0)
  143   3                              {
- 144   4                                 car_forward();
- 145   4                                 Openled4();
+ 144   4                                      car_forward();
+ 145   4                                      Openled4();
 *** WARNING C206 IN LINE 145 OF MOTO.C: 'Openled4': missing function-prototype
  146   4      
  147   4                              }
- 148   3                              while(!key_s2)//松手检测
+ 148   3                              while (!key_s2)//松手检测
  149   3                              {
  150   4      
  151   4                              }
  152   3      
  153   3                      }
- 154   2                      else if(key_s3==0)
+ 154   2                      else if (key_s3 == 0)
  155   2                      {
  156   3      
- 157   3                          delay_ms(5);//消抖
- 158   3                              if(key_s3==0)
+ 157   3                              delay_ms(5);//消抖
+ 158   3                              if (key_s3 == 0)
  159   3                              {
- 160   4                                 car_return();
- 161   4                                 BEEP=0;
- 162   4                                 delay_ms(300);
- 163   4                                      BEEP=1;
- 164   4                                 delay_ms(300);
- 165   4                                 BEEP=0;
- 166   4                                 delay_ms(300);
- 167   4                                 BEEP=1;
- 168   4                                 delay_ms(300);
- 169   4                                 BEEP=0;
- 170   4                                 delay_ms(300);
- 171   4                                 BEEP=1;
- 172   4                                 delay_ms(300);
+ 160   4                                      car_return();
+ 161   4                                      BEEP = 0;
+ 162   4                                      delay_ms(300);
+ 163   4                                      BEEP = 1;
+ 164   4                                      delay_ms(300);
+ 165   4                                      BEEP = 0;
+ 166   4                                      delay_ms(300);
+ 167   4                                      BEEP = 1;
+ 168   4                                      delay_ms(300);
+ 169   4                                      BEEP = 0;
+ 170   4                                      delay_ms(300);
+ 171   4                                      BEEP = 1;
+ 172   4                                      delay_ms(300);
  173   4      
  174   4                              }
- 175   3                              while(!key_s3)//松手检测
+ 175   3                              while (!key_s3)//松手检测
  176   3                              {
  177   4      
  178   4                              }
-C51 COMPILER V9.00   MOTO                                                                  11/30/2022 15:06:44 PAGE 4   
+C51 COMPILER V9.00   MOTO                                                                  12/02/2022 09:55:35 PAGE 4   
 
  179   3      
  180   3      
  181   3                      }
  182   2      
- 183   2                      else if(key_s4==0)
+ 183   2                      else if (key_s4 == 0)
  184   2                      {
  185   3      
- 186   3                          delay_ms(5);//消抖
- 187   3                              if(key_s4==0)
+ 186   3                              delay_ms(5);//消抖
+ 187   3                              if (key_s4 == 0)
  188   3                              {
- 189   4                                        c=1;
+ 189   4                                      c = 1;
  190   4                              }
- 191   3                              while(!key_s4)//松手检测
+ 191   3                              while (!key_s4)//松手检测
  192   3                              {
- 193   4                                 
+ 193   4      
  194   4                              }
  195   3      
  196   3      
  197   3                      }
  198   2      
- 199   2                      else if(key_s5==0)
+ 199   2                      else if (key_s5 == 0)
  200   2                      {
  201   3      
- 202   3                          delay_ms(5);//消抖
- 203   3                              if(key_s5==0)
+ 202   3                              delay_ms(5);//消抖
+ 203   3                              if (key_s5 == 0)
  204   3                              {
- 205   4                              c=0;
- 206   4                              led_stop();
+ 205   4                                      c = 0;
+ 206   4                                      led_stop();
 *** WARNING C206 IN LINE 206 OF MOTO.C: 'led_stop': missing function-prototype
  207   4                                      car_stop();
- 208   4                                      
- 209   4                                 BEEP=0;
- 210   4                                 delay_ms(1000);
- 211   4                                      BEEP=1;
- 212   4                                
+ 208   4      
+ 209   4                                      BEEP = 0;
+ 210   4                                      delay_ms(1000);
+ 211   4                                      BEEP = 1;
+ 212   4      
  213   4                              }
- 214   3                              while(!key_s5)//松手检测
+ 214   3                              while (!key_s5)//松手检测
  215   3                              {
  216   4      
  217   4                              }
@@ -236,14 +236,14 @@ line level    source
  219   3      
  220   3                      }
  221   2      
- 222   2                      if(c==1)
+ 222   2                      if (c == 1)
  223   2                      {
  224   3      
- 225   3                      showBirthday();
+ 225   3                              showBirthday();
 *** WARNING C206 IN LINE 225 OF MOTO.C: 'showBirthday': missing function-prototype
  226   3                      }
  227   2      
- 228   2                       }
+ 228   2              }
  229   1      
  230   1      }
 
@@ -254,7 +254,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----       2
-C51 COMPILER V9.00   MOTO                                                                  11/30/2022 15:06:44 PAGE 5   
+C51 COMPILER V9.00   MOTO                                                                  12/02/2022 09:55:35 PAGE 5   
 
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

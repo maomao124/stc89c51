@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   MAIN                                                                  12/01/2022 17:11:52 PAGE 1   
+C51 COMPILER V9.00   MAIN                                                                  12/02/2022 15:36:38 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
@@ -20,19 +20,19 @@ line level    source
   11          //3.函数：主函数  子函数 
   12          
   13          //现在主函数 中开发，开发完成，再移动。
-  14          sbit LED1 = P1^0;//相当于给P1.0这个引脚取了一个小名
-  15          sbit LED2 = P1^1;
-  16          sbit LED3 = P1^2;
-  17          sbit LED4 = P1^3;
+  14          sbit LED1 = P1 ^ 0;//相当于给P1.0这个引脚取了一个小名
+  15          sbit LED2 = P1 ^ 1;
+  16          sbit LED3 = P1 ^ 2;
+  17          sbit LED4 = P1 ^ 3;
   18          
-  19          sbit key_s2=P3^0;
-  20          sbit key_s3=P3^1;
-  21          sbit key_s4=P3^2;
-  22          sbit key_s5=P3^3;
+  19          sbit key_s2 = P3 ^ 0;
+  20          sbit key_s3 = P3 ^ 1;
+  21          sbit key_s4 = P3 ^ 2;
+  22          sbit key_s5 = P3 ^ 3;
   23          
-  24          sbit BEEP=P2^3;
+  24          sbit BEEP = P2 ^ 3;
   25          
-  26          sbit wela=P2^7;
+  26          sbit wela = P2 ^ 7;
   27          //------------LED------------//
   28          void Openled4();
   29          void SHINE_LED();
@@ -62,7 +62,7 @@ line level    source
   53          void showHello();
   54          void showBirthday();
   55          void showBirthday1();
-C51 COMPILER V9.00   MAIN                                                                  12/01/2022 17:11:52 PAGE 2   
+C51 COMPILER V9.00   MAIN                                                                  12/02/2022 15:36:38 PAGE 2   
 
   56          void led_stop();
   57          void showStudentId();
@@ -85,82 +85,112 @@ line level    source
   74          int getUARTStatus();
   75          void init_UART_main_lock();
   76          //----------------------------//
-  77          
-  78          
-  79          void mydelay()
-  80          {
-  81   1              unsigned int z = 1000000;
-  82   1              while(z--);
-  83   1      }
-  84          
-  85          
-  86          
-  87          typedef unsigned int u16;
-  88          typedef unsigned char u8;
-  89          void delay_ms(u16 n)
+  77          //------------led_1602-----------//
+  78          typedef unsigned char uchar;
+  79          typedef unsigned int uint;
+  80          void led_1602_show(uchar *str);
+  81          //----------------------------//
+  82          //------------music-------------//
+  83          void Time0_Init();
+  84          void music1();
+  85          void music2_init();
+  86          void music2();
+  87          //----------------------------//
+  88          
+  89          void mydelay()
   90          {
-  91   1              u8 i;
-  92   1              while(n--)
-  93   1              {
-  94   2                      i = 111;
-  95   2                      while(i--);
-  96   2              }
-  97   1      }
-  98          
-  99          
- 100          
- 101          
- 102          
- 103          void main(void)
- 104          {
- 105   1      
- 106   1                 /*
- 107   1                 while(1)
- 108   1                 {
- 109   1                 car_forward();
- 110   1                       delay_ms(1000);
- 111   1                        //car_stop();
- 112   1                        //delay_ms(500);
- 113   1      
- 114   1                         car_right();
- 115   1                        delay_ms(1000);
- 116   1                        //car_stop();
- 117   1                        //delay_ms(500);
-C51 COMPILER V9.00   MAIN                                                                  12/01/2022 17:11:52 PAGE 3   
+  91   1              unsigned int z = 1000000;
+  92   1              while (z--);
+  93   1      }
+  94          
+  95          
+  96          typedef unsigned int u16;
+  97          typedef unsigned char u8;
+  98          void delay_ms(u16 n)
+  99          {
+ 100   1              u8 i;
+ 101   1              while (n--)
+ 102   1              {
+ 103   2                      i = 111;
+ 104   2                      while (i--);
+ 105   2              }
+ 106   1      }
+ 107          
+ 108          
+ 109          
+ 110          
+ 111          
+ 112          void main(void)
+ 113          {
+ 114   1      
+ 115   1              /*
+ 116   1              while(1)
+ 117   1              {
+C51 COMPILER V9.00   MAIN                                                                  12/02/2022 15:36:38 PAGE 3   
 
- 118   1      
- 119   1                        car_return();
- 120   1                        delay_ms(1000);
- 121   1                        //car_stop();
- 122   1                        //delay_ms(500);
- 123   1      
- 124   1                        car_left();
- 125   1                        delay_ms(1000);
- 126   1                        car_stop();
- 127   1                        delay_ms(5000);
- 128   1      
- 129   1                        
- 130   1      
- 131   1                 }
+ 118   1              car_forward();
+ 119   1                delay_ms(1000);
+ 120   1                 //car_stop();
+ 121   1                 //delay_ms(500);
+ 122   1      
+ 123   1                      car_right();
+ 124   1                 delay_ms(1000);
+ 125   1                 //car_stop();
+ 126   1                 //delay_ms(500);
+ 127   1      
+ 128   1                 car_return();
+ 129   1                 delay_ms(1000);
+ 130   1                 //car_stop();
+ 131   1                 //delay_ms(500);
  132   1      
- 133   1                 */
- 134   1      
- 135   1                       /*
- 136   1                       
+ 133   1                 car_left();
+ 134   1                 delay_ms(1000);
+ 135   1                 car_stop();
+ 136   1                 delay_ms(5000);
  137   1      
  138   1      
- 139   1                       */
- 140   1      
+ 139   1      
+ 140   1              }
  141   1      
- 142   1      
+ 142   1              */
  143   1      
- 144   1                       init_UART();
+ 144   1              /*
  145   1      
- 146   1                       init_UART_main_lock();
+ 146   1      
  147   1      
- 148   1               while(1);
+ 148   1              */
  149   1      
- 150   1      }
+ 150   1      
+ 151   1      
+ 152   1      
+ 153   1              init_UART();
+ 154   1      
+ 155   1              init_UART_main_lock();
+ 156   1      
+ 157   1              /*
+ 158   1              Time0_Init();                   //定时器0中断初始化
+ 159   1              while(1)
+ 160   1              {
+ 161   1                      music1();               //播放
+ 162   1              }
+ 163   1      
+ 164   1              */
+ 165   1              
+ 166   1              /*
+ 167   1              music2_init();                  //定时器0中断初始化
+ 168   1              while(1)
+ 169   1              {
+ 170   1                      music2();               //播放
+ 171   1              }
+ 172   1              */
+ 173   1              
+ 174   1              //uchar *str="123";
+ 175   1              //led_1602_show(str);
+ 176   1              while (1);
+ 177   1      
+ 178   1      }
+
+C51 COMPILER V9.00   MAIN                                                                  12/02/2022 15:36:38 PAGE 4   
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

@@ -5,6 +5,9 @@
 "led_code.obj",
 "moto.obj",
 "interrupt.obj",
-"UART.obj" 
+"UART.obj",
+"led_1602.obj",
+"music1.obj",
+"music2.obj" 
 TO "one" 
 RAMSIZE(256) 

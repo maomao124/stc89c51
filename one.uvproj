@@ -386,6 +386,21 @@
               <FileType>1</FileType>
               <FilePath>.\UART.c</FilePath>
             </File>
+            <File>
+              <FileName>led_1602.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\led_1602.c</FilePath>
+            </File>
+            <File>
+              <FileName>music1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\music1.c</FilePath>
+            </File>
+            <File>
+              <FileName>music2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\music2.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
