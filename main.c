@@ -77,7 +77,7 @@ void init_UART_main_lock();
 //------------led_1602-----------//
 typedef unsigned char uchar;
 typedef unsigned int uint;
-void led_1602_show(uchar *str);
+void led_1602_show(uchar* str);
 //----------------------------//
 //------------music-------------//
 void Time0_Init();
@@ -162,7 +162,7 @@ void main(void)
 	}
 
 	*/
-	
+
 	/*
 	music2_init();			//定时器0中断初始化
 	while(1)
@@ -170,7 +170,7 @@ void main(void)
 		music2();		//播放
 	}
 	*/
-	
+
 	//uchar *str="123";
 	//led_1602_show(str);
 	while (1);

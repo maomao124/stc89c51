@@ -7,11 +7,11 @@ typedef unsigned int uint;
 
 #define LCD1602_DB P0	//LCD1602数据总线
 
-sbit LCD1602_RS = P3^5;	 //RS端
-sbit LCD1602_RW = P3^6;	 //RW端
-sbit LCD1602_EN = P3^4;	 //EN端
-sbit DU = P2^6;//
-sbit WE = P2^7;//数码管位选段选用于关闭数码管显示
+sbit LCD1602_RS = P3 ^ 5;	 //RS端
+sbit LCD1602_RW = P3 ^ 6;	 //RW端
+sbit LCD1602_EN = P3 ^ 4;	 //EN端
+sbit DU = P2 ^ 6;//
+sbit WE = P2 ^ 7;//数码管位选段选用于关闭数码管显示
 
 /*=================================================
 *函数名称：Read_Busy
@@ -28,7 +28,7 @@ void Read_Busy()
 		LCD1602_EN = 1;//使能EN
 		busy = LCD1602_DB;//读回数据
 		LCD1602_EN = 0;	 //拉低使能以便于下一次产生上升沿
-	}while(busy & 0x80); //判断状态字BIT7位是否为1，为1则表示忙，程序等待
+	} while (busy & 0x80); //判断状态字BIT7位是否为1，为1则表示忙，程序等待
 }
 /*=================================================
 *函数名称：LCD1602_Write_Cmd
@@ -63,16 +63,16 @@ void LCD1602_Write_Dat(uchar dat)
 /*=================================================
 *函数名称：LCD1602_Dis_OneChar
 *函数功能：在指定位置显示一个字符
-*调用：LCD1602_Write_Cmd(); LCD1602_Write_Dat();	
+*调用：LCD1602_Write_Cmd(); LCD1602_Write_Dat();
 *输入：x：要显示的横坐标取值0-40，y：要显示的行坐标取值0-1（0为第一行,1为第二行）
 		dat：需要显示的数据以ASCLL形式显示
 =================================================*/
-void LCD1602_Dis_OneChar(uchar x, uchar y,uchar dat)
+void LCD1602_Dis_OneChar(uchar x, uchar y, uchar dat)
 {
-	if(y)	x |= 0x40;
+	if (y)	x |= 0x40;
 	x |= 0x80;
 	LCD1602_Write_Cmd(x);
-	LCD1602_Write_Dat(dat);		
+	LCD1602_Write_Dat(dat);
 }
 /*=================================================
 *函数名称：LCD1602_Dis_Str
@@ -81,12 +81,12 @@ void LCD1602_Dis_OneChar(uchar x, uchar y,uchar dat)
 *输入：x：要显示的横坐标取值0-40，y：要显示的行坐标取值0-1（0为第一行,1为第二行）
 		*str：需要显示的字符串
 =================================================*/
-void LCD1602_Dis_Str(uchar x, uchar y, uchar *str)
+void LCD1602_Dis_Str(uchar x, uchar y, uchar* str)
 {
-	if(y) x |= 0x40;
+	if (y) x |= 0x40;
 	x |= 0x80;
 	LCD1602_Write_Cmd(x);
-	while(*str != '\0')
+	while (*str != '\0')
 	{
 		LCD1602_Write_Dat(*str++);
 	}
@@ -107,7 +107,7 @@ void Init_LCD1602()
 
 
 
-void led_1602_show(uchar *str)
+void led_1602_show(uchar* str)
 {
 	//uchar TestStr[] = {"Welcome!"};
 	DU = 0;

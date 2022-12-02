@@ -60,7 +60,7 @@ void init_UART_main_lock();
 //------------led_1602-----------//
 typedef unsigned char uchar;
 typedef unsigned int uint;
-void led_1602_show(uchar *str);
+void led_1602_show(uchar* str);
 //----------------------------//
 //------------music-------------//
 void Time0_Init();
@@ -154,54 +154,54 @@ void init_UART_main_lock()
 		}
 		if (getUARTStatus() == 22)
 		{
-			uchar *str="1";
-	        led_1602_show(str);
+			uchar* str = "1";
+			led_1602_show(str);
 			delay_ms(500);
-			str="2";
-	        led_1602_show(str);
+			str = "2";
+			led_1602_show(str);
 			delay_ms(500);
-			str="3";
-	        led_1602_show(str);
+			str = "3";
+			led_1602_show(str);
 			delay_ms(500);
-			str="4";
-	        led_1602_show(str);
+			str = "4";
+			led_1602_show(str);
 			delay_ms(500);
-			str="5";
-	        led_1602_show(str);
+			str = "5";
+			led_1602_show(str);
 			delay_ms(500);
-			str="6";
-	        led_1602_show(str);
+			str = "6";
+			led_1602_show(str);
 			delay_ms(500);
-			str="7";
-	        led_1602_show(str);
+			str = "7";
+			led_1602_show(str);
 			delay_ms(500);
-			str="8";
-	        led_1602_show(str);
+			str = "8";
+			led_1602_show(str);
 			delay_ms(500);
-			str="9";
-	        led_1602_show(str);
+			str = "9";
+			led_1602_show(str);
 			delay_ms(500);
-			str="0";
-	        led_1602_show(str);
+			str = "0";
+			led_1602_show(str);
 			delay_ms(500);
 		}
 
 		else if (getUARTStatus() == 0)
 		{
 			P1 = 0xff;
-			P2_3=1;
+			P2_3 = 1;
 			led_stop();
 		}
 		else if (getUARTStatus() == 23)
 		{
 			Time0_Init();
-            music1();
+			music1();
 		}
 
 		else if (getUARTStatus() == 24)
 		{
 			music2_init();			//定时器0中断初始化
-	    	music2();	         	//播放
+			music2();	         	//播放
 		}
 
 
@@ -276,39 +276,39 @@ void UART() interrupt 4
 
 		else if (temp == 16)
 		{
-			uchar *str="HELLO";
-	        led_1602_show(str);
+			uchar* str = "HELLO";
+			led_1602_show(str);
 		}
 
 		else if (temp == 17)
 		{
-			uchar *str="123456";
-	        led_1602_show(str);
+			uchar* str = "123456";
+			led_1602_show(str);
 		}
 
 		else if (temp == 18)
 		{
-			uchar *str="0234";
-	        led_1602_show(str);
+			uchar* str = "0234";
+			led_1602_show(str);
 		}
-		
+
 		else if (temp == 19)
 		{
-			uchar *str="china";
-	        led_1602_show(str);
+			uchar* str = "china";
+			led_1602_show(str);
 		}
 
 		else if (temp == 20)
 		{
-			
-			uchar *str="github:maomao124";
-	        led_1602_show(str);
+
+			uchar* str = "github:maomao124";
+			led_1602_show(str);
 		}
 
 		else if (temp == 21)
 		{
-			uchar *str="QQ:1296193245";
-	        led_1602_show(str);
+			uchar* str = "QQ:1296193245";
+			led_1602_show(str);
 		}
 
 		else if (temp == 22)
@@ -322,7 +322,7 @@ void UART() interrupt 4
 		}
 
 
-		  UARTStatus = temp;
+		UARTStatus = temp;
 
 		//数据传送回去
 		temp++;
